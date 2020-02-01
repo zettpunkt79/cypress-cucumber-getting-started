@@ -1,0 +1,59 @@
+[
+  {
+    "description": "  As a test automation engineer\n  I would like to see a demo here\n  to get my test up and running in no time",
+    "keyword": "Feature",
+    "name": "Demo",
+    "line": 1,
+    "id": "demo",
+    "tags": [],
+    "uri": "demo.feature",
+    "elements": [
+      {
+        "id": "demo;i-can-use-scenario-outlines-with-example-traversaz",
+        "keyword": "Scenario",
+        "line": 22,
+        "name": "I can use scenario outlines with example TraversaZ",
+        "tags": [
+          {
+            "name": "@focus",
+            "line": 16
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "I visit \"/\"",
+            "result": {
+              "status": "passed",
+              "duration": 1928000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 18,
+            "name": "I click the navigation link with text \"next\"",
+            "result": {
+              "status": "passed",
+              "duration": 776000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 19,
+            "name": "I see \"TraversaZ\" in the main headline",
+            "result": {
+              "status": "failed",
+              "duration": 4057000000,
+              "error_message": "CypressError: Timed out retrying: expected '<h1>' to contain 'TraversaZ'\n    at Object.cypressErr (https://example.cypress.io/__cypress/runner/cypress_runner.js:86207:11)\n    at Object.throwErr (https://example.cypress.io/__cypress/runner/cypress_runner.js:86162:18)\n    at Object.throwErrByPath (https://example.cypress.io/__cypress/runner/cypress_runner.js:86194:17)\n    at retry (https://example.cypress.io/__cypress/runner/cypress_runner.js:76849:16)\n    at onFailFn (https://example.cypress.io/__cypress/runner/cypress_runner.js:65634:16)\n    at tryCatcher (https://example.cypress.io/__cypress/runner/cypress_runner.js:120203:23)\n    at Promise._settlePromiseFromHandler (https://example.cypress.io/__cypress/runner/cypress_runner.js:118139:31)\n    at Promise._settlePromise (https://example.cypress.io/__cypress/runner/cypress_runner.js:118196:18)\n    at Promise._settlePromise0 (https://example.cypress.io/__cypress/runner/cypress_runner.js:118241:10)\n    at Promise._settlePromises (https://example.cypress.io/__cypress/runner/cypress_runner.js:118316:18)\n    at Async../node_modules/bluebird/js/release/async.js.Async._drainQueue (https://example.cypress.io/__cypress/runner/cypress_runner.js:114928:16)\n    at Async../node_modules/bluebird/js/release/async.js.Async._drainQueues (https://example.cypress.io/__cypress/runner/cypress_runner.js:114938:10)\n    at Async.drainQueues (https://example.cypress.io/__cypress/runner/cypress_runner.js:114812:14)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+{
+    "plugins": [
+      "cypress"
+    ],
+    "extends": [
+      "plugin:cypress/recommended"
+    ],
+    "rules": {
+        "curly": "error",
+        "eqeqeq": ["error", "always"],
+        "indent": ["error", 2 ,{ "SwitchCase": 1}],
+        "max-len": ["error", 120],
+        "no-else-return": "error",
+        "no-eq-null": "error",
+        "no-magic-numbers": ["warn", { "ignoreArrayIndexes": true, "ignore": [0,1,-1,1000]}],
+        "no-multi-spaces": "error",
+        "no-multi-str": "error",
+        "no-param-reassign": "error",
+        "no-redeclare": "error",
+        "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "log" }],
+        "no-var": "warn",
+        "prefer-arrow-callback": "warn",
+        "prefer-const": "warn",
+        "prefer-destructuring": "warn",
+        "prefer-template": "warn",
+        "quotes": ["error", "single"],
+        "symbol-description": "warn"
+      }
+}

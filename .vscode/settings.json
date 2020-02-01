@@ -1,0 +1,19 @@
+{
+  "editor.tabSize": 2,
+  "cucumberautocomplete.steps": [
+    "cypress/integration/*/*.js"
+  ],
+  "cucumberautocomplete.syncfeatures": "cypress/integration/*feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.strictGherkinValidation": true,
+  "cucumberautocomplete.smartSnippets": true,
+  "cucumberautocomplete.stepsInvariants": true,
+  "cucumberautocomplete.onTypeFormat": true,
+  "editor.quickSuggestions": {
+    "comments": false,
+    "strings": true,
+    "other": true
+  },
+  "cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
+  "cucumberautocomplete.stepRegExSymbol": "'"
+}
