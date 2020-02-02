@@ -5,27 +5,26 @@ const fs = require('fs')
 const path = require('path')
 
 const cucumberJsonDir = './cypress/test-results/cucumber-json'
-const screenshotsDir = './cypress/screenshots'
-const htmlReportDir = './cypress/test-results/html'
+const cucumberReportFileMap = {}
+const cucumberReportMap = {}
 const jsonIndentLevel = 2
+const htmlReportDir = './cypress/test-results/html'
+const screenshotsDir = './cypress/screenshots'
 
-const addScreenshots = () => {
-  const cucumberReportMap = {}
-  const jsonNames = {}
-
+const getCucumberReportMaps = () => {
   const files = fs.readdirSync(cucumberJsonDir)
-  
   files.forEach(file => {
     const json = JSON.parse(
       fs.readFileSync(path.join(cucumberJsonDir, file))
     )
     const [feature] = json[0].uri.split('/').reverse()
-    jsonNames[feature] = file
+    cucumberReportFileMap[feature] = file
     cucumberReportMap[feature] = json
   })
+}
 
+const addScreenshots = () => {
   const failingFeatures = fs.readdirSync(screenshotsDir)
-
   failingFeatures.forEach(feature => {
     const screenshots = fs.readdirSync(path.join(screenshotsDir, feature))
     screenshots.forEach(screenshot => {
@@ -37,14 +36,12 @@ const addScreenshots = () => {
       const myScenarios = cucumberReportMap[feature][0].elements.filter(
         e => e.name === scenarioName
       )
+      if (!myScenarios) {return}
       myScenarios.forEach(myScenario => {
         const myStep = myScenario.steps.find(
           step => step.result.status === 'failed'
         )
-        if (!myStep) {
-          //Skip the following if current scenario has no failed step.
-          return
-        }
+        if (!myStep) {return}
         const data = fs.readFileSync(
           path.join(screenshotsDir, feature, screenshot)
         )
@@ -55,7 +52,7 @@ const addScreenshots = () => {
         }
         //Write JSON with screenshot back to report file.
         fs.writeFileSync(
-          path.join(cucumberJsonDir, jsonNames[feature]),
+          path.join(cucumberJsonDir, cucumberReportFileMap[feature]),
           JSON.stringify(cucumberReportMap[feature], null, jsonIndentLevel)
         )
       })
@@ -68,25 +65,20 @@ const generateReport = () => {
     jsonDir: cucumberJsonDir,
     reportPath: htmlReportDir,
     displayDuration: true,
+    pageTitle: 'Cypress Cucumber Test Report',
+    reportName: `Cypress Cucumber Test Report - ${new Date().toLocaleString()}`,
     metadata: {
       browser: {
-        name: 'Chrome',
-        version: '79',
+        name: 'chrome'
       },
       device: 'VM',
       platform: {
-        name: 'Windows',
-        version: '10',
-      },
-    },
-    customData: {
-      title: 'Run info',
-      data: [
-        {label: 'Project', value: 'Custom project'},
-      ],
-    },
+        name: 'linux'
+      } 
+    }
   })
 }
 
+getCucumberReportMaps()
 addScreenshots()
 generateReport()
