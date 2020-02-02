@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+
+/** 
+ * This script augments the cucumber report file with screenshots of test failured 
+ * and generates a HTML report afterwards. Inspired by:
+ * https://github.com/jcundill/cypress-cucumber-preprocessor/blob/master/fixJson.js
+ */
+
 const report = require('multiple-cucumber-html-reporter')
 
 const fs = require('fs')

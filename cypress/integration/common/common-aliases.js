@@ -1,4 +1,7 @@
-/** Aliases for hideous selectors can be placed here. */
+/** 
+ * Aliases for hideous selectors can be placed here.
+ */
+
 export {alias}
 
 const alias = {
