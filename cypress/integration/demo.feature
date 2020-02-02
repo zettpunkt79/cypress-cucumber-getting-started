@@ -11,7 +11,7 @@ Feature: Demo
 
   Scenario: I can use non-global step definitions
     When I click the navigation link with text "next"
-    Then I see "TraversaZ" in the main headline
+    Then I see "Traversal" in the main headline
 
   Scenario Outline: I can use scenario outlines with examples
     When I click the navigation link with text "<link text>"
@@ -19,4 +19,4 @@ Feature: Demo
     Examples:
     | link text | headline  |
     | next      | Traversal |
-    | blur      | Actions  |
+    | blur      | Actions   |
