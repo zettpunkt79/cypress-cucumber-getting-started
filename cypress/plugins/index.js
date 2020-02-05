@@ -11,6 +11,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const cucumber = require('cypress-cucumber-preprocessor').default
+const {addMatchImageSnapshotPlugin} = require('cypress-image-snapshot/plugin')
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
@@ -19,7 +20,8 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   on('file:preprocessor', cucumber())
-  
+  addMatchImageSnapshotPlugin(on, config)
+
   // process the configFile option flag and load
   // a new config file in cypress/config if value matches
   // default to base cypress.json config

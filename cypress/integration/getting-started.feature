@@ -1,4 +1,4 @@
-Feature: Demo
+Feature: Getting Started
   As a test automation engineer
   I would like to see some examples here
   to kick start my testing in no time
@@ -20,3 +20,8 @@ Feature: Demo
     | link text | headline  |
     | next      | Traversal |
     | blur      | Actions   |
+
+	Scenario: I can use visual testing to check against a baseline
+		Given I browse on a mobile phone
+		And I end up on the 404 page
+		Then the page always looks the same
