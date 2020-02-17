@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import {mailhog} from './mailhog'
 /**
  * Common steps for plain html elements go here
  */

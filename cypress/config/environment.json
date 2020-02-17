@@ -1,3 +1,6 @@
 {
-  "baseUrl": "https://example.cypress.io"
+  "baseUrl": "https://example.cypress.io",
+  "env": {
+    "mailhogUrl": "http://localhost:8025/api/v2/messages"
+  }
 }

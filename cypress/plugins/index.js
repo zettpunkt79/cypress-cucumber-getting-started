@@ -30,7 +30,7 @@ module.exports = (on, config) => {
 
 function processConfig(on, config) {
   const file = config.env.configFile || 'environment'
-  return getConfigurationByFile(file).then(function(file) {
+  return getConfigurationByFile(file).then((file) => {
     return file
   })
 }
