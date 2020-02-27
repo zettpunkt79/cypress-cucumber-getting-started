@@ -17,11 +17,14 @@ Feature: Getting Started
     When I click the navigation link with text "<link text>"
     Then I see "<headline>" in the main headline
     Examples:
-    | link text | headline  |
-    | next      | Traversal |
-    | blur      | Actions   |
+      | link text | headline  |
+      | next      | Traversal |
+      | blur      | Actions   |
 
-	Scenario: I can use visual testing to check against a baseline
-		Given I browse on a mobile phone
-		And I end up on the 404 page
-		Then the page always looks the same
+  Scenario: I can use visual testing to check against a baseline
+    Given I browse on a mobile phone
+    And I end up on the 404 page
+    Then the page always looks the same
+
+  Scenario: I can take a screenshot which is integrated in the report
+    When I take a screenshot

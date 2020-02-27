@@ -15,6 +15,10 @@ When('I click the navigation link with text {string}', linkText => {
   cy.get(alias.navigationLinks).contains(linkText).click()
 })
 
+When('I take a screenshot', () => {
+  cy.screenshot()
+})
+
 Then('I see {string} in the main headline', headlineText => {
   cy.get(alias.mainHeadline).should('contain', headlineText)
 })

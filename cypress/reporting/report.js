@@ -50,7 +50,7 @@ function addScreenshots() {
       // regex to parse 'I can use scenario outlines with examples' from either of these:
       // Getting Started -- I can use scenario outlines with examples (example #1) (failed).png
       // Getting Started -- I can use scenario outlines with examples (failed).png
-      const regex = /(?<=--\ ).+?((?=\ \(example\ #\d+\))|(?=\ \(failed\)))/g
+      const regex = /(?<=--\ ).+?((?=\ \(example\ #\d+\))|(?=\ \(failed\))|(?=\.\w{3}))/g
       const [scenarioName] = screenshot.match(regex)
       console.info(chalk.blue('\n    Adding screenshot to cucumber-json report for'))
       console.info(chalk.blue(`    '${scenarioName}'`))
@@ -61,9 +61,16 @@ function addScreenshots() {
       )
       if (!myScenarios) {return}
       myScenarios.forEach(myScenario => {
-        const myStep = myScenario.steps.find(
-          step => step.result.status === 'failed'
-        )
+        let myStep
+        if(screenshot.includes('failed')){
+          myStep = myScenario.steps.find(
+            step => step.result.status === 'failed'
+          )
+        } else {
+          myStep = myScenario.steps.find(
+            step => step.name.includes('screenshot')
+          )
+        }
         if (!myStep) {return}
         const data = fs.readFileSync(
           path.join(screenshotsDir, feature, screenshot)
