@@ -31,3 +31,6 @@ npm test
 ```shell
 npm run report
 ```
+
+## E-mail-Testing against Gmail inbox
+To enable e-mail testing against a Gmail inbox, first make sure to place the credentials.json and token.json into the folder cypress/plugins/gmail-tester.
