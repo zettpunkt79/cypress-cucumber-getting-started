@@ -41,28 +41,47 @@ function getCucumberReportMaps() {
 }
 
 function addScreenshots() {
-  const failingFeatures = fs.readdirSync(screenshotsDir)
-  failingFeatures.forEach(feature => {
-    const screenshots = fs.readdirSync(path.join(screenshotsDir, feature)).filter(file => {
-      return file.indexOf('.png') > -1
-    })
+  /* Credits: 
+    https://gist.github.com/kethinov/6658166#gistcomment-3178557
+    https://gist.github.com/Phenomite/038c57cdaf95b8b8383a0fd522919662
+  */  
+  // Prepend the given path segment
+  const prependPathSegment = pathSegment => location => path.join(pathSegment, location)
+  // fs.readdir but with relative paths
+  const readdirPreserveRelativePath = location => fs.readdirSync(location).map(prependPathSegment(location))
+  // Recursive fs.readdir but with relative paths
+  const readdirRecursive = location => readdirPreserveRelativePath(location)
+    .reduce((result, currentValue) => fs.statSync(currentValue).isDirectory()
+      ? result.concat(readdirRecursive(currentValue))
+      : result.concat(currentValue), [])
+  const screenshots = readdirRecursive(path.resolve(screenshotsDir)).filter(file => {
+    return file.indexOf('.png') > -1
+  })
+  // Extract feature list from screenshot list
+  const featuresList = Array.from(new Set(screenshots.map(x => x.match(/[\w-_.]+\.feature/g)[0])))
+  featuresList.forEach(feature => {
     screenshots.forEach(screenshot => {
       // regex to parse 'I can use scenario outlines with examples' from either of these:
-      // Getting Started -- I can use scenario outlines with examples (example #1) (failed).png
-      // Getting Started -- I can use scenario outlines with examples (failed).png
+      //   - Getting Started -- I can use scenario outlines with examples (example #1) (failed).png
+      //   - Getting Started -- I can use scenario outlines with examples (failed).png
+      //   - Getting Started -- I can use scenario outlines with examples.png 
       const regex = /(?<=--\ ).+?((?=\ \(example\ #\d+\))|(?=\ \(failed\))|(?=\.\w{3}))/g
       const [scenarioName] = screenshot.match(regex)
       console.info(chalk.blue('\n    Adding screenshot to cucumber-json report for'))
       console.info(chalk.blue(`    '${scenarioName}'`))
-      //Find all scenarios matching the scenario name of the screenshot.
-      //This is important when using the scenario outline mechanism
+      // Find all scenarios matching the scenario name of the screenshot.
+      // This is important when using the scenario outline mechanism
       const myScenarios = cucumberReportMap[feature][0].elements.filter(
         e => scenarioName.includes(e.name)
       )
-      if (!myScenarios) {return}
+      if (!myScenarios) { return }
+      let foundFailedStep = false
       myScenarios.forEach(myScenario => {
+        if (foundFailedStep) {
+          return
+        }
         let myStep
-        if(screenshot.includes('failed')){
+        if (screenshot.includes('(failed)')) {
           myStep = myScenario.steps.find(
             step => step.result.status === 'failed'
           )
@@ -71,19 +90,19 @@ function addScreenshots() {
             step => step.name.includes('screenshot')
           )
         }
-        if (!myStep) {return}
+        if (!myStep) {
+          return
+        }
         const data = fs.readFileSync(
-          path.join(screenshotsDir, feature, screenshot)
+          path.resolve(screenshot)
         )
         if (data) {
           const base64Image = Buffer.from(data, 'binary').toString('base64')
           if (!myStep.embeddings) {
             myStep.embeddings = []
-          } else {
-            //remove existing screenshot
-            myStep.embeddings.pop()
+            myStep.embeddings.push({data: base64Image, mime_type: 'image/png'})
+            foundFailedStep = true
           }
-          myStep.embeddings.push({data: base64Image, mime_type: 'image/png'})
         }
       })
       //Write JSON with screenshot back to report file.
@@ -96,50 +115,57 @@ function addScreenshots() {
 }
 
 function addSnapshots () {
-  fs.ensureDirSync(snapshotDir)
-  failingFeatures = fs.readdirSync(snapshotDir)
-  failingFeatures.forEach(feature => {
-    if (fs.existsSync(path.join(snapshotDir, feature, '__diff_output__'))) {
-      const snapshots = fs.readdirSync(path.join(snapshotDir, feature, '__diff_output__')).filter(file => {
-        return file.indexOf('.png') > -1
-      })
-      snapshots.forEach(snapshot => {
-        // regex to parse 'I can use visual testing to check against a baseline' from
-        // Getting Started -- I can use visual testing to check against a baseline.diff.png
-        const regex = /(?<=--\s)[\w\s\,]+/g
-        const [scenarioName] = snapshot.match(regex)
-        console.info(chalk.blue('\n    Adding snapshot to cucumber-json report for'))
-        console.info(chalk.blue(`    '${scenarioName}'`))
-        const myScenarios = cucumberReportMap[feature][0].elements.filter(
-          e => scenarioName.includes(e.name)
+  // Prepend the given path segment
+  const prependPathSegment = pathSegment => location => path.join(pathSegment, location)
+  // fs.readdir but with relative paths
+  const readdirPreserveRelativePath = location => fs.readdirSync(location).map(prependPathSegment(location))
+  // Recursive fs.readdir but with relative paths
+  const readdirRecursive = location => readdirPreserveRelativePath(location)
+    .reduce((result, currentValue) => fs.statSync(currentValue).isDirectory()
+      ? result.concat(readdirRecursive(currentValue))
+      : result.concat(currentValue), [])
+  const snapshots = readdirRecursive(path.resolve(snapshotDir)).filter(file => {
+    return file.indexOf('.diff.png') > -1
+  })
+  // Extract feature list from screenshot list
+  const featuresList = Array.from(new Set(snapshots.map(x => x.match(/[\w-_.]+\.feature/g)[0])))
+  featuresList.forEach(feature => {
+    snapshots.forEach(snapshot => {
+      // regex to parse 'I can use visual testing to check against a baseline' from
+      // Getting Started -- I can use visual testing to check against a baseline.diff.png
+      const regex = /(?<=--\s)[\w\s\,]+/g
+      const [scenarioName] = snapshot.match(regex)
+      console.info(chalk.blue('\n    Adding snapshot to cucumber-json report for'))
+      console.info(chalk.blue(`    '${scenarioName}'`))
+      const myScenarios = cucumberReportMap[feature][0].elements.filter(
+        e => scenarioName.includes(e.name)
+      )
+      if(!myScenarios) {return}
+      myScenarios.forEach(myScenario => {
+        const myStep = myScenario.steps.find(
+          step => step.result.status === 'failed'
         )
-        if(!myScenarios) {return}
-        myScenarios.forEach(myScenario => {
-          const myStep = myScenario.steps.find(
-            step => step.result.status === 'failed'
-          )
-          if (!myStep) {return}
-          const data = fs.readFileSync(
-            path.join(snapshotDir, feature, '__diff_output__', snapshot)
-          )
-          if (data) {
-            if (!myStep.embeddings) {
-              myStep.embeddings = []
-            } else {
-              //remove existing screenshot
-              myStep.embeddings.pop()
-            }
-            const base64Image = Buffer.from(data, 'binary').toString('base64')
-            myStep.embeddings.push({mime_type: 'image/png', data: base64Image})
+        if (!myStep) {return}
+        const data = fs.readFileSync(
+          path.resolve(snapshot)
+        )
+        if (data) {
+          const base64Image = Buffer.from(data, 'binary').toString('base64')
+          if (!myStep.embeddings) {
+            myStep.embeddings = []
+          } else {
+            //remove screenshot before adding snapshot
+            myStep.embeddings.pop()
           }
-        })
-        //Write JSON with snapshot back to report file.
-        fs.writeFileSync(
-          path.join(cucumberJsonDir, cucumberReportFileMap[feature]),
-          JSON.stringify(cucumberReportMap[feature], null, jsonIndentLevel)
-        )
+          myStep.embeddings.push({mime_type: 'image/png', data: base64Image})
+        }
       })
-    }
+      //Write JSON with snapshot back to report file.
+      fs.writeFileSync(
+        path.join(cucumberJsonDir, cucumberReportFileMap[feature]),
+        JSON.stringify(cucumberReportMap[feature], null, jsonIndentLevel)
+      )
+    })
   })
 }
 
