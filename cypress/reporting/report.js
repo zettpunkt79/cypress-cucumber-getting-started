@@ -33,7 +33,7 @@ function getCucumberReportMaps() {
     const json = JSON.parse(
       fs.readFileSync(path.join(cucumberJsonDir, file))
     )
-    if(!json[0]) {return}
+    if (!json[0]) { return }
     const [feature] = json[0].uri.split('/').reverse()
     cucumberReportFileMap[feature] = file
     cucumberReportMap[feature] = json
@@ -44,7 +44,7 @@ function addScreenshots() {
   /* Credits: 
     https://gist.github.com/kethinov/6658166#gistcomment-3178557
     https://gist.github.com/Phenomite/038c57cdaf95b8b8383a0fd522919662
-  */  
+  */
   // Prepend the given path segment
   const prependPathSegment = pathSegment => location => path.join(pathSegment, location)
   // fs.readdir but with relative paths
@@ -100,7 +100,7 @@ function addScreenshots() {
           const base64Image = Buffer.from(data, 'binary').toString('base64')
           if (!myStep.embeddings) {
             myStep.embeddings = []
-            myStep.embeddings.push({data: base64Image, mime_type: 'image/png'})
+            myStep.embeddings.push({ data: base64Image, mime_type: 'image/png' })
             foundFailedStep = true
           }
         }
@@ -114,7 +114,7 @@ function addScreenshots() {
   })
 }
 
-function addSnapshots () {
+function addSnapshots() {
   // Prepend the given path segment
   const prependPathSegment = pathSegment => location => path.join(pathSegment, location)
   // fs.readdir but with relative paths
@@ -140,12 +140,12 @@ function addSnapshots () {
       const myScenarios = cucumberReportMap[feature][0].elements.filter(
         e => scenarioName.includes(e.name)
       )
-      if(!myScenarios) {return}
+      if (!myScenarios) { return }
       myScenarios.forEach(myScenario => {
         const myStep = myScenario.steps.find(
           step => step.result.status === 'failed'
         )
-        if (!myStep) {return}
+        if (!myStep) { return }
         const data = fs.readFileSync(
           path.resolve(snapshot)
         )
@@ -157,7 +157,7 @@ function addSnapshots () {
             //remove screenshot before adding snapshot
             myStep.embeddings.pop()
           }
-          myStep.embeddings.push({mime_type: 'image/png', data: base64Image})
+          myStep.embeddings.push({ mime_type: 'image/png', data: base64Image })
         }
       })
       //Write JSON with snapshot back to report file.
@@ -179,7 +179,7 @@ function generateReport() {
       displayDuration: true,
       pageTitle: 'System-Test Report',
       reportName: `System-Test Report - ${new Date().toLocaleString()}`,
-      metadata:{
+      metadata: {
         browser: {
           name: 'chrome'
         },
