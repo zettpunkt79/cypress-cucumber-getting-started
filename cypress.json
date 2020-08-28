@@ -1,4 +1,5 @@
 {
+  "baseUrl": "https://example.cypress.io",
   "video": false,
   "testFiles": "**/*.feature"
 }

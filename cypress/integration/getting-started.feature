@@ -28,7 +28,3 @@ Feature: Getting Started
 
   Scenario: I can take a screenshot which is integrated in the report
     When I take a screenshot
-
-  @ignore
-  Scenario: Email test
-    When I see an email from "sender@example.com" to "receiver@example.com" with "example" in subject
