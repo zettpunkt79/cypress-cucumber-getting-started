@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * This script is executed by the 'yarn report' step and augments the cucumber report 
+ * This script is executed by the 'npm run report' step and augments the cucumber report 
  * files of failed features with screenshots and snapshots. Mechanism was inspired by:
  * https://github.com/jcundill/cypress-cucumber-preprocessor/blob/master/fixJson.js
  * It also leverages the multiple-cucumber-html-reporter library to generate a HTML 
@@ -177,17 +177,10 @@ function generateReport() {
       jsonDir: cucumberJsonDir,
       reportPath: htmlReportDir,
       displayDuration: true,
+      displayReportTime: true,
       pageTitle: 'System-Test Report',
       reportName: `System-Test Report - ${new Date().toLocaleString()}`,
-      metadata: {
-        browser: {
-          name: 'chrome'
-        },
-        device: 'VM',
-        platform: {
-          name: 'linux'
-        }
-      }
+      hideMetadata: true
     })
   }
 }
