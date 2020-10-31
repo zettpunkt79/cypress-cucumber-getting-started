@@ -22,6 +22,18 @@ npm test
 
 ***Please note: This also clears former test results.***
 
+## Skip scenarios with _@ignore_ tag
+
+### Powershell
+```
+$env:CYPRESS_TAGS = 'not @ignore' ; npm test
+```
+
+### Bash
+```
+CYPRESS_TAGS="not @ignore" npm test
+```
+
 ## Generate HTML report with screenshots
 
 ```shell
