@@ -22,16 +22,3 @@ When('I take a screenshot', () => {
 Then('I see {string} in the main headline', headlineText => {
   cy.get(alias.mainHeadline).should('contain', headlineText)
 })
-
-When('I see an email from {string} to {string} with {string} in subject', (from, to, subject) => {
-  cy.task('gmail:check', {
-    options: {
-      from,
-      to,
-      subject,
-      wait_time_sec: 10,
-      max_wait_time_sec: 40,
-      include_body: true
-    }
-  }).as('email')
-})

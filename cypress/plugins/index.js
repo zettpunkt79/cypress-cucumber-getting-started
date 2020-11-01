@@ -8,7 +8,6 @@
 // https://on.cypress.io/plugins-guide
 // ***********************************************************
 
-const path = require('path')
 const cucumber = require('cypress-cucumber-preprocessor').default
 const {addMatchImageSnapshotPlugin} = require('cypress-image-snapshot/plugin')
 
@@ -19,15 +18,5 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   on('file:preprocessor', cucumber())
-  on('task', {
-    'gmail:check': async args => {
-      const email = await gmail_tester.check_inbox(
-        path.resolve(__dirname, 'gmail-tester/credentials.json'),
-        path.resolve(__dirname, 'gmail-tester/token.json'),
-        args.options
-      )
-      return email
-    }
-  })
   addMatchImageSnapshotPlugin(on, config)
 }
