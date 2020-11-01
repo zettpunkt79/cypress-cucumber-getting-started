@@ -6,8 +6,8 @@
 // eslint-disable-next-line no-unused-vars
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
 
-Given('I browse on a mobile phone', () => {
-  cy.viewport('iphone-xr')
+Given('I browse on a {string}', (viewport) => {
+  cy.viewport(viewport)
 })
 
 Given('I visit {string}', (url) => {

@@ -22,7 +22,7 @@ Feature: Getting Started
       | blur      | Actions   |
 
   Scenario: I can use visual testing to check against a baseline
-    Given I browse on a mobile phone
+    Given I browse on a "macbook-16"
     And I end up on the 404 page
     Then the page always looks the same
 
