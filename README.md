@@ -5,7 +5,7 @@ Cypress project readily preconfigured with [cypress-cucumber-preprocessor](https
 ## Installation
 
 ```shell
-npm install
+npm install --legacy-peer-deps
 ```
 
 ## Opening Cypress
