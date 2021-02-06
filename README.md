@@ -2,6 +2,9 @@
 
 Cypress project readily preconfigured with [cypress-cucumber-preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor) and [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter/).
 
+*Please note:*
+This repo's sole purpose is to demo how cypress-cucumber-preprocessor can be integrated with multiple cucumber reporter.
+
 ## Installation
 
 ```shell
