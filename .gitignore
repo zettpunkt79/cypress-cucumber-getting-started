@@ -3,5 +3,5 @@
 .idea
 .vscode
 cypress/screenshots
-cypress/test-results
+cypress/reports
 node_modules
