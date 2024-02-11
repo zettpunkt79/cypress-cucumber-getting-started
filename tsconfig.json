@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "nodenext",
+    "skipLibCheck": true,
+    "types": ["cypress", "@testing-library/cypress"]
+  }
+}
