@@ -1,5 +1,7 @@
-node_modules
-cypress/test-results
-cypress/screenshots
-cypress/plugins/gmail-tester/*.json
+*.iml
 .DS_Store
+.idea
+.vscode
+cypress/screenshots
+cypress/test-results
+node_modules

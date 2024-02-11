@@ -1,46 +1,23 @@
 {
-  "name": "cypress-cucumber-getting-started",
-  "version": "1.0.0",
-  "description": "Cypress project readilly preconfigured with cypress-cucumber-preprocessor and multiple-cucumber-html-reporter",
-  "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "pretest": "node ./cypress/reporting/delete-results.js",
-    "report": "node ./cypress/reporting/report.js",
     "test": "cypress run"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/webnexusmobile/cypress-cucumber-getting-started.git"
-  },
-  "keywords": [
-    "cypress",
-    "cucumber"
-  ],
-  "author": "webnexusmobile",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/webnexusmobile/cypress-cucumber-getting-started/issues"
-  },
-  "homepage": "https://github.com/webnexusmobile/cypress-cucumber-getting-started#readme",
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true,
-    "cucumberJson": {
-      "generate": true,
-      "outputFolder": "cypress/test-results/cucumber-json",
-      "filePrefix": "",
-      "fileSuffix": ".cucumber"
-    }
-  },
   "dependencies": {
-    "cypress": "9.1.0",
-    "cypress-cucumber-preprocessor": "2.3.1",
-    "cypress-image-snapshot": "4.0.1",
-    "cypress-wait-until": "1.7.1",
-    "multiple-cucumber-html-reporter": "1.18.2"
+    "@badeball/cypress-cucumber-preprocessor": "latest",
+    "@bahmutov/cypress-esbuild-preprocessor": "latest",
+    "@testing-library/cypress": "latest",
+    "cypress": "latest",
+    "typescript": "latest"
   },
-  "devDependencies": {
-    "eslint": "8.3.0",
-    "eslint-plugin-cypress": "2.12.1"
+  "cypress-cucumber-preprocessor": {
+    "json": {
+      "enabled": true,
+      "output": "./cypress/reports/cucumber-report.json"
+    },
+    "html": {
+      "enabled": true,
+      "output": "./cypress/reports/cucumber-report.html"
+    }
   }
 }

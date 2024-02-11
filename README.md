@@ -1,14 +1,11 @@
 # Cypress Cucumber Getting Started
 
-Cypress project readily preconfigured with [cypress-cucumber-preprocessor](https://github.com/TheBrainFamily/cypress-cucumber-preprocessor) and [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter/).
-
-*Please note:*
-This repo's sole purpose is to demo how cypress-cucumber-preprocessor can be integrated with multiple cucumber reporter.
+Cypress project readily preconfigured with [cypress-cucumber-preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor), TypeScript support, reporting (JSON, HTML) and [cypress-testing-library](https://github.com/testing-library/cypress-testing-library).
 
 ## Installation
 
 ```shell
-npm install --legacy-peer-deps
+npm install
 ```
 
 ## Opening Cypress
@@ -23,8 +20,6 @@ npm run cy:open
 npm test
 ```
 
-***Please note: This also clears former test results.***
-
 ## Skip scenarios with _@ignore_ tag
 
 ### Powershell
@@ -37,8 +32,5 @@ $env:CYPRESS_TAGS = 'not @ignore' ; npm test
 CYPRESS_TAGS="not @ignore" npm test
 ```
 
-## Generate HTML report with screenshots
-
-```shell
-npm run report
-```
+## Reporting
+JSON and HTML reports will be automatically saved in the cypress/reports folder
