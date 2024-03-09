@@ -3,6 +3,6 @@
     "esModuleInterop": true,
     "module": "nodenext",
     "skipLibCheck": true,
-    "types": ["cypress", "@testing-library/cypress"]
+    "types": ["cypress", "@testing-library/cypress", "@simonsmith/cypress-image-snapshot/types"]
   }
 }

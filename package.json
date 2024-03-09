@@ -6,6 +6,7 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "latest",
     "@bahmutov/cypress-esbuild-preprocessor": "latest",
+    "@simonsmith/cypress-image-snapshot": "^9.0.1",
     "@testing-library/cypress": "latest",
     "cypress": "latest",
     "typescript": "latest"
@@ -18,6 +19,7 @@
     "html": {
       "enabled": true,
       "output": "./cypress/reports/cucumber-report.html"
-    }
+    },
+    "omitFiltered": true
   }
 }

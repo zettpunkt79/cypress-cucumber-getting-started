@@ -1,7 +1,7 @@
 *.iml
 .DS_Store
 .idea
-.vscode
 cypress/screenshots
 cypress/reports
 node_modules
+__diff_output__
