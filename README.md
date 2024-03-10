@@ -1,12 +1,21 @@
 # Cypress Cucumber Getting Started
 
-Cypress project readily preconfigured with [cypress-cucumber-preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor), TypeScript support, reporting (JSON, HTML) and [cypress-testing-library](https://github.com/testing-library/cypress-testing-library).
+Cypress project readily preconfigured with 
+- [cypress-cucumber-preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor) with
+- reporting (JSON, HTML) enabled
+- TypeScript support, 
+- [cypress-testing-library](https://github.com/testing-library/cypress-testing-library)
+- [cypress-image-snapshot](https://github.com/simonsmith/cypress-image-snapshot)
 
 ## Installation
 
 ```shell
 npm install
 ```
+
+## Recommended and preconfigured addons for VS Code
+- [Cucumber](https://marketplace.visualstudio.com/items?itemName=CucumberOpen.cucumber-official)
+- [Pettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Opening Cypress
 

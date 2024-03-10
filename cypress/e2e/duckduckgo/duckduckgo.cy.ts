@@ -1,13 +1,19 @@
-import { When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import { When, Then, Given } from '@badeball/cypress-cucumber-preprocessor'
 
-When("I visit duckduckgo.com", () => {
-    cy.visit("https://duckduckgo.com/");
-});
+Given('I visit duckduckgo.com', () => {
+  cy.visit('https://duckduckgo.com/')
+})
 
-Then("I should see a search bar", () => {
-    cy.findByRole('combobox', {name: 'Search with DuckDuckGo'}).should('be.visible')
-});
+When('I check the logo', () => {
+  cy.get('img').first().as('logo')
+})
 
-Then("I the logo always looks the same", () => {
-    cy.get('img').first().matchImageSnapshot();
-});
+Then('the logo always looks the same', () => {
+  cy.get('@logo').matchImageSnapshot()
+})
+
+Then('I can see the search bar', () => {
+  cy.findByRole('combobox', { name: 'Search with DuckDuckGo' }).should(
+    'be.visible'
+  )
+})
